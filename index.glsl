@@ -15,6 +15,10 @@ float diff(in vec4 pix1, in vec4 pix2) {
 }
 
 float edge(in sampler2D tex, in vec2 coords, in vec2 renderSize){
+  edge(tex, coords, renderSize, 0.25, 0.4);
+}
+
+float edge(in sampler2D tex, in vec2 coords, in vec2 renderSize, in float thr1, in float thr2){
   float dx = 1.0 / renderSize.x;
   float dy = 1.0 / renderSize.y;
   vec4 pix[9];
@@ -36,6 +40,6 @@ float edge(in sampler2D tex, in vec2 coords, in vec2 renderSize){
           diff(pix[2],pix[6])
            )/4.;
 
-  return threshold(0.25,0.4,clamp(3.0*delta,0.0,1.0));
+  return threshold(thr1,thr2,clamp(3.0*delta,0.0,1.0));
 }
 #pragma glslify: export(edge)
